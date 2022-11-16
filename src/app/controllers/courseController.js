@@ -2,6 +2,8 @@ const {
   createSomething,
   createCourse,
   getAll,
+  addPerson,
+  updatePerson,
 } = require("../services/CourseService");
 
 class CourseController {
@@ -14,6 +16,12 @@ class CourseController {
   }
   getAll(req, res) {
     getAll(req, res);
+  }
+  addPerson(req, res) {
+    addPerson(req, res);
+  }
+  updatePerson(req, res) {
+    updatePerson(req, res);
   }
 }
 

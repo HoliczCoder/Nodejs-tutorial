@@ -8,7 +8,7 @@ class SiteController {
       if (!err){
         res.json(course)
       } else {
-        res.status(500).json({ error :  'there is somthing wronf'})
+        res.status(500).json({ error :  'there is somthing wrong'})
       }
     })
     // res.json({

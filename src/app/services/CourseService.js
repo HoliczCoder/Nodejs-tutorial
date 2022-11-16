@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Course = require("../model/Course");
 const Something = require("../model/Something");
+const Person = require("../model/Person");
+const { log } = require("console");
 
 function createCourse(req, res) {
   console.log(req);
@@ -50,8 +52,44 @@ function createSomething(req, res) {
     });
 }
 
+function addPerson(req, res) {
+  const arrayOfPeople = [
+    { name: "Frankie", age: 74, favoriteFoods: ["Del Taco"] },
+    { name: "Sol", age: 76, favoriteFoods: ["roast chicken"] },
+    { name: "Robert", age: 78, favoriteFoods: ["wine"] },
+  ];
+
+  Person.create(arrayOfPeople, function (err, people) {
+    if (err) return console.log(err);
+    res.status(200).json({
+      people,
+    });
+  });
+}
+
+function updatePerson(req, res) {
+  Person.findById(req.body.id)
+    .exec()
+    .then((people) => {
+      people.favoriteFoods.push("hamburger");
+      people
+        .save()
+        .then((data) => {
+          res.status(200).json({
+            data,
+          });
+        })
+        .catch((e) => {
+          console.log("update data by id failed");
+        });
+    }).catch((e)=> {
+      console.log ("find by id failed")
+    });
+}
+
 function getAll(req, res) {
-  Course.findOne({name: req.body.name }).exec()
+  Course.findOne({ name: req.body.name })
+    .exec()
     .then((allCourse) => {
       return res.status(200).json({
         success: true,
@@ -68,4 +106,4 @@ function getAll(req, res) {
     });
 }
 
-module.exports = { createSomething, createCourse, getAll };
+module.exports = { createSomething, createCourse, getAll, addPerson, updatePerson };
